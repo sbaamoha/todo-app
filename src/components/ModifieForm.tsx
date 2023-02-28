@@ -3,9 +3,10 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 type IProps = {
   id: Number;
   setIsFormOpen: Dispatch<SetStateAction<boolean>>;
+  setIsTodoModified: Dispatch<SetStateAction<boolean>>;
 };
 
-const ModifieForm = ({ id, setIsFormOpen }: IProps) => {
+const ModifieForm = ({ id, setIsFormOpen, setIsTodoModified }: IProps) => {
   const [newTitle, setTitle] = useState<string>("");
   const [newEndDate, setEndDate] = useState<string>("");
   const [newDescription, setDescription] = useState<string>("");
@@ -32,11 +33,12 @@ const ModifieForm = ({ id, setIsFormOpen }: IProps) => {
     });
     if (req.ok) {
       setIsFormOpen(false);
+      setIsTodoModified((prev) => !prev);
       // redirect to /
     }
   };
   return (
-    <div className="absolute">
+    <div className="absolute bg-gray-200 p-3 rounded-md">
       <p className="text-red-500 text-bold">{error} </p>
       <form onSubmit={handleEdit} className="flex flex-col capitalize">
         <label htmlFor="title">new title</label>

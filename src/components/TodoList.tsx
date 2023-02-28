@@ -24,13 +24,14 @@ const TodoList = ({ todo, setIsTodoModified }: TProps) => {
     });
     if (req.ok) {
       // redirect to /
+      setIsTodoModified((prev) => !prev);
     }
   };
   return (
     <div className="">
       <div
         className={`flex flex-col justify-between capitalize p-3 rounded-md shadow-lg ${
-          todoCompleted && `bg-gray-200`
+          todoCompleted && `bg-green-300`
         }`}
       >
         <div>
@@ -46,7 +47,9 @@ const TodoList = ({ todo, setIsTodoModified }: TProps) => {
             onClick={() => setTodoCompleted((prev) => !prev)}
           />
           <button
-            onClick={() => setIsFormOpen((prev) => !prev)}
+            onClick={() => {
+              setIsFormOpen((prev) => !prev);
+            }}
             className="btn"
           >
             edit
@@ -56,7 +59,13 @@ const TodoList = ({ todo, setIsTodoModified }: TProps) => {
           </button>
         </div>
       </div>
-      {isFormOpen && <ModifieForm id={todo.id} setIsFormOpen={setIsFormOpen} />}
+      {isFormOpen && (
+        <ModifieForm
+          id={todo.id}
+          setIsTodoModified={setIsTodoModified}
+          setIsFormOpen={setIsFormOpen}
+        />
+      )}
     </div>
   );
 };

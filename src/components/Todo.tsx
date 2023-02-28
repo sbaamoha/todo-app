@@ -19,7 +19,7 @@ const Todo = () => {
       setTodos(res);
     };
     fetchTodos();
-  }, [isTodoModified, user]);
+  }, [isTodoModified]);
   return (
     <div className="flex justify-between h-[100%] gap-6 px-12 py-12">
       <div className="flex gap-2 flex-wrap">
@@ -27,7 +27,7 @@ const Todo = () => {
           <TodoList key={i} todo={todo} setIsTodoModified={setIsTodoModified} />
         ))}
       </div>
-      <TodoForm />
+      <TodoForm setIsTodoModified={setIsTodoModified} />
     </div>
   );
 };

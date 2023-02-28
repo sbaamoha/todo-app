@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
+
 import useCookies from "react-cookie/cjs/useCookies";
 import { useNavigate } from "react-router-dom";
 
-const TodoForm = () => {
+const TodoForm = ({
+  setIsTodoModified,
+}: {
+  setIsTodoModified: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
@@ -44,6 +49,7 @@ const TodoForm = () => {
       setError("");
       setDescription("");
       navigate("/");
+      setIsTodoModified((prev) => !prev);
     }
   };
   return (
