@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn{
+    @apply p-2 rounded-md capitalize text-white bg-green-400
+}
+input{
+    @apply p-2 outline-1 border-2
+}
