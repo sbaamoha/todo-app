@@ -1,18 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Todo from "./components/Todo";
-import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
+import Navbar from "./components/Layout/Navbar";
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-      </Routes>
       <Navbar />
-      <main>
+      <main className="h-[80vh] ">
         <Todo />
       </main>
       <Footer />

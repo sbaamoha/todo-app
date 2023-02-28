@@ -1,4 +1,10 @@
+import useCookies from "react-cookie/cjs/useCookies";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  let navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const user = cookies.user && JSON.parse(JSON.stringify(cookies.user));
   return (
     <header className="px-6 md:px-12 py-6 shadow-md">
       <nav className="capitalize flex justify-between ">
@@ -6,16 +12,22 @@ const Navbar = () => {
           todo app
         </a>
         <div>
-          {!true ? (
+          {cookies.user ? (
             // if user login
-            <div className="flex gap-6">
-              <p>username from cookies</p>
-              <button className="btn" onClick={() => "clear the cookies"}>
+            <div className="flex items-center gap-6">
+              <p>{user.email} </p>
+              <button
+                className="btn"
+                onClick={() => {
+                  removeCookie("user");
+                  navigate("/");
+                }}
+              >
                 logout
               </button>
             </div>
           ) : (
-            <div className="flex gap-6">
+            <div className="flex items-center gap-6">
               <a href="/login" className="btn">
                 login
               </a>

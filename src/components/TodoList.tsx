@@ -3,22 +3,23 @@ import ModifieForm from "./ModifieForm";
 
 type TProps = {
   todo: {
-    title: String;
-    userId: Number;
-    completed: Boolean;
-    endDate: String;
-    pos: Number;
-    description: String;
-    id: Number;
+    title: string;
+    userId: number;
+    completed: boolean;
+    endDate: string;
+    pos: number;
+    description: string;
+    id: number;
   };
   setIsTodoModified: Dispatch<SetStateAction<boolean>>;
 };
 
 const TodoList = ({ todo, setIsTodoModified }: TProps) => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [todoCompleted, setTodoCompleted] = useState<boolean>(false);
 
   const handleDelete = async () => {
-    const req = await fetch(`http://localhost:3000/todos/${todo.id}`, {
+    const req = await fetch(`http://localhost:3001/todos/${todo.id}`, {
       method: "DELETE",
     });
     if (req.ok) {
@@ -26,16 +27,28 @@ const TodoList = ({ todo, setIsTodoModified }: TProps) => {
     }
   };
   return (
-    <>
-      {isFormOpen && <ModifieForm id={todo.id} setIsFormOpen={setIsFormOpen} />}
-      <div className="capitalize p-6 rounded-md bg-gray-200 shadow-lg ">
+    <div className="">
+      <div
+        className={`flex flex-col justify-between capitalize p-3 rounded-md shadow-lg ${
+          todoCompleted && `bg-gray-200`
+        }`}
+      >
         <div>
-          <h2>{todo.title}</h2>
-          <p>{todo.endDate}</p>
-          <p>{todo.description}</p>
+          <h2 className="text-2xl font-bold">{todo.title}</h2>
+          <p className="font-serif">{todo.endDate}</p>
+          <p className="text-gray-600">{todo.description}</p>
         </div>
-        <div className="flex justify-end items-end">
-          <button onClick={() => setIsFormOpen(true)} className="btn">
+        <div className="flex justify-end items-center gap-3">
+          <label htmlFor={todo.title}>completed</label>
+          <input
+            type="checkbox"
+            id={todo.title}
+            onClick={() => setTodoCompleted((prev) => !prev)}
+          />
+          <button
+            onClick={() => setIsFormOpen((prev) => !prev)}
+            className="btn"
+          >
             edit
           </button>
           <button onClick={handleDelete} className="btn">
@@ -43,7 +56,8 @@ const TodoList = ({ todo, setIsTodoModified }: TProps) => {
           </button>
         </div>
       </div>
-    </>
+      {isFormOpen && <ModifieForm id={todo.id} setIsFormOpen={setIsFormOpen} />}
+    </div>
   );
 };
 
